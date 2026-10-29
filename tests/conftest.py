@@ -39,13 +39,13 @@ class Repos:
     def repo(self, name: str, branch: str) -> Path:
         """A repository with one commit, on branch."""
         repo = self.tmp_path / name
-        git("init", "-q", "-b", branch, repo)
-        git("-C", repo, "commit", "-q", "--allow-empty", "-m", "init")
+        git("init", "--quiet", "--initial-branch", branch, repo)
+        git("-C", repo, "commit", "--quiet", "--allow-empty", "--message", "init")
         return repo
 
     def clone(self, origin: Path, name: str) -> Path:
         clone = self.tmp_path / name
-        git("clone", "-q", origin, clone)
+        git("clone", "--quiet", origin, clone)
         return clone
 
 

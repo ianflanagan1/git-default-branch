@@ -22,7 +22,7 @@ def test_a_remote_whose_head_is_not_recorded_is_asked_and_its_answer_kept(repos)
     origin = repos.repo("origin", "trunk")
     clone = repos.clone(origin, "clone")
     repos.git("-C", clone, "remote", "set-head", "origin", "--delete")
-    repos.git("-C", clone, "branch", "-m", "trunk", "main")
+    repos.git("-C", clone, "branch", "--move", "trunk", "main")
     assert default_branch(clone, ask_remote=True) == "trunk"
     assert repos.git("-C", clone, "symbolic-ref", "refs/remotes/origin/HEAD") == (
         "refs/remotes/origin/trunk"
@@ -33,7 +33,7 @@ def test_without_asking_the_remote_the_local_branches_are_gone_by(repos):
     origin = repos.repo("origin", "trunk")
     clone = repos.clone(origin, "clone")
     repos.git("-C", clone, "remote", "set-head", "origin", "--delete")
-    repos.git("-C", clone, "branch", "-m", "trunk", "main")
+    repos.git("-C", clone, "branch", "--move", "trunk", "main")
     assert default_branch(clone, ask_remote=False) == "main"
 
 
@@ -63,5 +63,5 @@ def test_a_folder_that_is_not_a_repository_has_none(tmp_path: Path):
 def test_a_linked_worktree_has_the_same_default_branch_as_its_main_checkout(repos, tmp_path):
     clone = repos.clone(repos.repo("origin", "trunk"), "clone")
     worktree = tmp_path / "clone-wt1"
-    repos.git("-C", clone, "worktree", "add", "-q", "--detach", worktree)
+    repos.git("-C", clone, "worktree", "add", "--quiet", "--detach", worktree)
     assert default_branch(worktree, ask_remote=False) == "trunk"

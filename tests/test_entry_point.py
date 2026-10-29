@@ -41,7 +41,7 @@ def test_offline_it_does_not_ask_the_remote(repos):
     origin = repos.repo("origin", "trunk")
     clone = repos.clone(origin, "clone")
     repos.git("-C", clone, "remote", "set-head", "origin", "--delete")
-    repos.git("-C", clone, "branch", "-m", "trunk", "main")
+    repos.git("-C", clone, "branch", "--move", "trunk", "main")
     assert launch("--offline", cwd=clone).stdout == "main\n"
     assert launch(cwd=clone).stdout == "trunk\n"
 

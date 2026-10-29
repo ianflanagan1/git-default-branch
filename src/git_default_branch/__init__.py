@@ -106,7 +106,7 @@ def default_branch(repo: Path, ask_remote: bool) -> str | None:
 
 def _read(repo: Path) -> Facts:
     remote = remote_to_ask((_git(repo, "remote") or "").splitlines())
-    head = _git(repo, "symbolic-ref", "-q", "--short", f"refs/remotes/{remote}/HEAD")
+    head = _git(repo, "symbolic-ref", "--quiet", "--short", f"refs/remotes/{remote}/HEAD")
     return Facts(
         override=_git(repo, "config", "--get", OVERRIDE),
         remote=remote,
