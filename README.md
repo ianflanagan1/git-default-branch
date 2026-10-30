@@ -56,13 +56,13 @@ When it can't tell, it prints nothing on stdout, says why on stderr and exits 1:
 
 ```sh
 cd ~/projects/cli/git-default-branch
-devbox run setup   # uv sync, then links git-default-branch into ~/.local/bin
+devbox run -- task setup   # uv sync, then links git-default-branch into ~/.local/bin
 ```
 
 ## Development
 
 ```sh
-devbox run check   # ruff, then pytest
+devbox run -- task check   # ruff, then pytest
 ```
 
 ## License
